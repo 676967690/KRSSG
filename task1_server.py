@@ -19,9 +19,9 @@ flag_5 = 0
 flag_6 = 0
 flag_8 = 0
 flag_7 = 0
-
+#function to do iteration
 def chief(a,b,c,d):
-    
+    # as these are global varible
     global flag_1
     global flag_2
     global flag_3
@@ -47,43 +47,46 @@ def chief(a,b,c,d):
     global pos_worker2
     global pos_worker3
     global pos_worker4
+    
+    #increments of position
     pos_worker1 += a
     pos_worker2 += b
     pos_worker3 += c
     pos_worker4 += d
+    #when workers haven't escaped..............................
     if(pos_worker1 < 99):
         while(pos_worker1!=0):
-            if i[pos_worker1][0] == '#':
+            if i[pos_worker1][0] == '#': #bomb🤯🤯🤯
                 pos_worker1 = pos_worker1-8
-                if pos_worker1 < 0:
+                if pos_worker1 < 0: #position can't be smaller than 0
                     pos_worker1 = 0
             else:
                 break
     if(pos_worker2 < 99):
         while(pos_worker2!=0):
-            if i[pos_worker2][0] == '#':
+            if i[pos_worker2][0] == '#': #bomb🤯🤯🤯
                 pos_worker2 = pos_worker2-8
-                if pos_worker2 < 0:
+                if pos_worker2 < 0:      #position can't be smaller than 0
                     pos_worker2 = 0
             else:
                 break
     if(pos_worker3 < 99):
         while(pos_worker3!=0):
-            if i[pos_worker3][0] == '#':
+            if i[pos_worker3][0] == '#': #bomb🤯🤯🤯
                 pos_worker3 = pos_worker3-8
-                if pos_worker3 < 0:
+                if pos_worker3 < 0:    #position can't be smaller than 0
                     pos_worker3 = 0
             else:
                 break
     if(pos_worker4 < 99):
         while(pos_worker4!=0):
-            if i[pos_worker4][0] == '#':
+            if i[pos_worker4][0] == '#': #bomb🤯🤯🤯
                 pos_worker4 = pos_worker4-8
-                if pos_worker4 < 0:
+                if pos_worker4 < 0:     #position can't be smaller than 0
                     pos_worker4 = 0
             else:
                 break
-
+    #for editing purpose...................
     if(0<pos_worker1 < 99):
         for k in range(4):
             if i[pos_worker1][k] == '.':
@@ -116,7 +119,8 @@ def chief(a,b,c,d):
             if i[pos_worker4][k] == ' ':
                 i[pos_worker4][k] = 'D'
                 break
-    
+                
+    #prints the maze............
     for n in range(10):
         for y in range(10):
             for h in range(5):
@@ -126,7 +130,7 @@ def chief(a,b,c,d):
                     print(i[(9-n)*10+9-y][h], end='')
         print('\n')
     print('..............')
-
+    
     if(pos_worker1 >= 99):
         if(flag_1 == 0):
             L.append(1)
@@ -147,25 +151,26 @@ def chief(a,b,c,d):
             L.append(4)
             flag_4 = 1
             flag_8 = 1
-    
+    #print if workers has escaped...........
     if (flag_5==1):
-        flag_5=2
+        flag_5=2  #changing value so that it doesn't print twice
         os.system('start cmd /k echo player one escaped')
     if (flag_6==1):
-        flag_6=2
+        flag_6=2  #changing value so that it doesn't print twice
         os.system('start cmd /k echo player two escaped')
     if (flag_7==1):
-        flag_7=2
+        flag_7=2  #changing value so that it doesn't print twice
         os.system('start cmd /k echo player three escaped')
     if (flag_8==1):
-        flag_8=2
+        flag_8=2  #changing value so that it doesn't print twice
         os.system('start cmd /k echo player four escaped')
 
 
 
-while(pos_worker1<99 or pos_worker2<99 or pos_worker3<99 or pos_worker4<99):  
+while(pos_worker1<99 or pos_worker2<99 or pos_worker3<99 or pos_worker4<99): #while all workers not escaped 
     st = [0,0,0,0]
     for i in range(4):
+        #creating socket
         s = socket.socket()         
         host = socket.gethostname() 
         port = 1245                
@@ -186,7 +191,7 @@ port = 1245
 s.bind((host, port))        
 s.listen(1)                 
 c, addr = s.accept() 
-c.send('1'.encode("utf-8"))
+c.send('1'.encode("utf-8"))#to make client stop 
 s.close()
 
 print('They escaped in order ',end='')
