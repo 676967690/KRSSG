@@ -1,10 +1,5 @@
-from tkinter import N
 import numpy
-import random
 import socket
-import sys
-import platform
-from subprocess import Popen
 import os
 
 
@@ -58,7 +53,7 @@ def chief(a,b,c,d):
     pos_worker4 += d
     if(pos_worker1 < 99):
         while(pos_worker1!=0):
-            if i[pos_worker1] == '#      ':
+            if i[pos_worker1][0] == '#':
                 pos_worker1 = pos_worker1-8
                 if pos_worker1 < 0:
                     pos_worker1 = 0
@@ -66,7 +61,7 @@ def chief(a,b,c,d):
                 break
     if(pos_worker2 < 99):
         while(pos_worker2!=0):
-            if i[pos_worker2] == '#      ':
+            if i[pos_worker2][0] == '#':
                 pos_worker2 = pos_worker2-8
                 if pos_worker2 < 0:
                     pos_worker2 = 0
@@ -74,7 +69,7 @@ def chief(a,b,c,d):
                 break
     if(pos_worker3 < 99):
         while(pos_worker3!=0):
-            if i[pos_worker3] == '#      ':
+            if i[pos_worker3][0] == '#':
                 pos_worker3 = pos_worker3-8
                 if pos_worker3 < 0:
                     pos_worker3 = 0
@@ -82,7 +77,7 @@ def chief(a,b,c,d):
                 break
     if(pos_worker4 < 99):
         while(pos_worker4!=0):
-            if i[pos_worker4] == '#      ':
+            if i[pos_worker4][0] == '#':
                 pos_worker4 = pos_worker4-8
                 if pos_worker4 < 0:
                     pos_worker4 = 0
@@ -136,41 +131,63 @@ def chief(a,b,c,d):
         if(flag_1 == 0):
             L.append(1)
             flag_1 = 1
+            flag_5 = 1
     if(pos_worker2 >= 99):
         if(flag_2 == 0):
             L.append(2)
             flag_2 = 1
+            flag_6 = 1
     if(pos_worker3 >= 99):
         if(flag_3 == 0):
             L.append(3)
             flag_3 = 1
+            flag_7 = 1
     if(pos_worker4 >= 99):
         if(flag_4 == 0):
             L.append(4)
             flag_4 = 1
+            flag_8 = 1
     
-
+    if (flag_5==1):
+        flag_5=2
+        os.system('start cmd /k echo player one escaped')
+    if (flag_6==1):
+        flag_6=2
+        os.system('start cmd /k echo player two escaped')
+    if (flag_7==1):
+        flag_7=2
+        os.system('start cmd /k echo player three escaped')
+    if (flag_8==1):
+        flag_8=2
+        os.system('start cmd /k echo player four escaped')
 
 
 
 while(pos_worker1<99 or pos_worker2<99 or pos_worker3<99 or pos_worker4<99):  
     st = [0,0,0,0]
     for i in range(4):
-        s = socket.socket()         # Create a socket object
-        host = socket.gethostname() # Get local machine name
-        port = 1245                # Reserve a port for your service.
-        s.bind((host, port))        # Bind to the port
+        s = socket.socket()         
+        host = socket.gethostname() 
+        port = 1245                
+        s.bind((host, port))        
 
-        s.listen(1)                 # Now wait for client connection.
+        s.listen(1)                 
 
-        c, addr = s.accept()     # Establish connection with client.
+        c, addr = s.accept()     
         st[i] = c.recv(1024)
         st[i] = st[i].decode("utf-8")
         st[i] = (int)(st[i])
-        
+        c.send('0'.encode("utf-8"))
         s.close()
     chief(st[0],st[1],st[2],st[3])
-
+s = socket.socket()         
+host = socket.gethostname() 
+port = 1245                
+s.bind((host, port))        
+s.listen(1)                 
+c, addr = s.accept() 
+c.send('1'.encode("utf-8"))
+s.close()
 
 print('They escaped in order ',end='')
 for i in range(4):
