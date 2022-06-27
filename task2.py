@@ -3,14 +3,14 @@ from enum import Enum, auto
 
 
 class States(Enum):
-    NEUTRAL = auto()
-    ATTACK = auto()
-    DEATH = auto()
+    NEUTRAL = auto() #natural state
+    ATTACK = auto()  #state of attack
+    DEATH = auto()   #death
 
-
+#oops
 class GameObject:
     def __init__(self):
-        self.__state = States.NEUTRAL
+        self.__state = States.NEUTRAL #normal state
 
     def set_state(self, state):
         self.__state = state
@@ -23,33 +23,33 @@ class Entity(GameObject):
     def get_health(self):
         return self.__health
 
-    def set_health(self, health):
+    def set_health(self, health):  
         h = health
-        if h<0:
+        if h<0:  #when health is smaller than 0 it becomes 0 as health smaller than 0 not possible
             h = 0
         self.__health = h
 
 player = Entity()
-player.set_state(States.ATTACK)
+player.set_state(States.ATTACK) #player in attack mode
 
 enemy = Entity()
 enemy.set_health(35)
-enemy.set_state(States.NEUTRAL)
+enemy.set_state(States.NEUTRAL) #enemy initially in neutral mode
 
-i=0
+i=0 #variable to count iteration .....
 
 print('Iteration Number: '+str(i),end='\n')
 print('Input: -', end=' | ')
 print('Output: 000', end=' | ')
 print('Present State: 111')
 
-def binary_for_player(num):
+def binary_for_player(num):     # function specially made to give output in desired format
     if num == 0:
         return '00'
     elif num==1:
         return '01'
     else:
-        return bin(num).replace('0b','')
+        return bin(num).replace('0b','') #when we use bin() it gibes 0b at front so we must remove it
 
 def binary_for_enymy(num):
     if 0<=num<=1:
@@ -60,11 +60,11 @@ def binary_for_enymy(num):
         return bin(num).replace('0b','')
 
 
-state=0
+state=0 # enemy alive
 while enemy.get_health()>0:
-    i = i+1
+    i = i+1 #iteratoin num increases by 1
     
-    flag= enemy.get_health()
+    flag= enemy.get_health() #has a puopose
     print('Iteration Number: '+str(i))
     
     T = input("B for 'Barbarian'\nG for 'Giant'\nP for 'P.E.K.K.A'\nEnter the player; ")
@@ -77,12 +77,12 @@ while enemy.get_health()>0:
        
     if player.get_state() == States.ATTACK:
         enemy.set_health(enemy.get_health()-player.get_health())
-        enemy.set_state(States.ATTACK)
+        enemy.set_state(States.ATTACK) # if player attacking enemy also attacks
     if enemy.get_state() == States.ATTACK:
         player.set_health(player.get_health()-flag)
-    if enemy.get_health() <= 0:
+    if enemy.get_health() <= 0: 
         enemy.set_state(States.DEATH)
-        state = 1
+        state = 1   #enemy died
 
 
     print('Input: ',T, end='|')
